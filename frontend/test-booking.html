@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Test Booking</h2>
+<button onclick="send()">Send Booking</button>
+
+<script>
+function send() {
+  fetch("http://localhost:5000/api/booking/create", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      customerName: "Maaz",
+      phone: "9876543210",
+      bikeNumber: "GJ05AB1234",
+      bikeName: "Splendor",
+      serviceType: "Service + Engine"
+    })
+  })
+  .then(res => res.json())
+  .then(data => alert(JSON.stringify(data)))
+  .catch(err => alert("ERROR: " + err));
+}
+</script>
+</body>
+</html>

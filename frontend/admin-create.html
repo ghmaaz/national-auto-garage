@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Admin</title>
+</head>
+<body>
+
+<h2>Create Admin (One Time)</h2>
+
+<input type="text" id="username" placeholder="Admin Username"><br><br>
+<input type="password" id="password" placeholder="Admin Password"><br><br>
+
+<button onclick="createAdmin()">Create Admin</button>
+
+<script>
+function createAdmin() {
+  const data = {
+    username: document.getElementById("username").value,
+    password: document.getElementById("password").value
+  };
+
+  if (!data.username || !data.password) {
+    alert("Fill all fields");
+    return;
+  }
+
+  fetch("http://localhost:5000/api/admin/create", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(result => {
+    alert(result.message);
+  })
+  .catch(() => alert("Error creating admin"));
+}
+</script>
+
+</body>
+</html>
