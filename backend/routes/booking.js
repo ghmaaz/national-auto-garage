@@ -3,47 +3,117 @@ const Booking = require("../models/Booking");
 
 const router = express.Router();
 
-// ✅ CREATE BOOKING
+/* ======================================================
+   📝 CREATE BOOKING (USER)
+====================================================== */
 router.post("/create", async (req, res) => {
   try {
+    const {
+      customerName,
+      phone,
+      bikeNumber,
+      bikeName,
+      serviceType,
+      userEmail
+    } = req.body;
+
+    // 🔎 Validation
+    if (
+      !customerName ||
+      !phone ||
+      !bikeNumber ||
+      !bikeName ||
+      !serviceType
+    ) {
+      return res.status(400).json({
+        ok: false,
+        error: "All fields are required"
+      });
+    }
+
     const booking = new Booking({
-      customerName: req.body.customerName,
-      phone: req.body.phone,
-      bikeNumber: req.body.bikeNumber,
-      bikeName: req.body.bikeName,
-      serviceType: req.body.serviceType,
-      userEmail: req.body.userEmail, // 🔐 USER IDENTIFIER
+      customerName,
+      phone,
+      bikeNumber,
+      bikeName,
+      serviceType,
+      userEmail, // optional but useful
       status: "Pending"
     });
 
     await booking.save();
-    res.json({ message: "Booking created successfully" });
+
+    res.json({
+      ok: true,
+      message: "Booking created successfully",
+      booking
+    });
+
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Booking failed" });
+    console.error("BOOKING CREATE ERROR:", err);
+    res.status(500).json({
+      ok: false,
+      error: "Booking failed"
+    });
   }
 });
 
-// ✅ GET ALL BOOKINGS (ADMIN + USER)
+/* ======================================================
+   📋 GET ALL BOOKINGS (ADMIN + USER VIEW)
+====================================================== */
 router.get("/all", async (req, res) => {
   try {
     const bookings = await Booking.find().sort({ createdAt: -1 });
+
     res.json(bookings);
   } catch (err) {
-    res.status(500).json({ error: "Failed to fetch bookings" });
+    console.error("FETCH BOOKINGS ERROR:", err);
+    res.status(500).json({
+      ok: false,
+      error: "Failed to fetch bookings"
+    });
   }
 });
 
-// ✅ UPDATE STATUS (ADMIN ONLY)
+/* ======================================================
+   🔄 UPDATE BOOKING STATUS (ADMIN)
+====================================================== */
 router.put("/update-status/:id", async (req, res) => {
   try {
-    await Booking.findByIdAndUpdate(req.params.id, {
-      status: req.body.status
+    const { status } = req.body;
+
+    if (!status) {
+      return res.status(400).json({
+        ok: false,
+        error: "Status is required"
+      });
+    }
+
+    const booking = await Booking.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
+
+    if (!booking) {
+      return res.status(404).json({
+        ok: false,
+        error: "Booking not found"
+      });
+    }
+
+    res.json({
+      ok: true,
+      message: "Status updated successfully",
+      booking
     });
-    res.json({ message: "Status updated successfully" });
+
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Status update failed" });
+    console.error("STATUS UPDATE ERROR:", err);
+    res.status(500).json({
+      ok: false,
+      error: "Status update failed"
+    });
   }
 });
 

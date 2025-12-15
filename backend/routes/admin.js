@@ -4,40 +4,93 @@ const Admin = require("../models/Admin");
 
 const router = express.Router();
 
-// ✅ AUTO CREATE ADMIN (ONE TIME)
+/*
+|--------------------------------------------------------------------------
+| 🔹 ONE-TIME ADMIN CREATE (SEED)
+| 👉 Browser me sirf 1 baar open karo:
+| https://your-backend-url/api/admin/seed
+|--------------------------------------------------------------------------
+*/
 router.get("/seed", async (req, res) => {
   try {
     const existing = await Admin.findOne({ username: "admin" });
+
     if (existing) {
-      return res.json({ ok: true, message: "Admin already exists" });
+      return res.json({
+        ok: true,
+        message: "Admin already exists"
+      });
     }
 
-    const hashed = await bcrypt.hash("admin123", 10);
+    const hashedPassword = await bcrypt.hash("admin123", 10);
 
     const admin = new Admin({
       username: "admin",
-      password: hashed
+      password: hashedPassword
     });
 
     await admin.save();
-    res.json({ ok: true, message: "Admin created successfully" });
+
+    res.json({
+      ok: true,
+      message: "Admin created successfully",
+      username: "admin",
+      password: "admin123"
+    });
+
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ ok: false, error: "Admin seed failed" });
+    console.error("ADMIN SEED ERROR:", err);
+    res.status(500).json({
+      ok: false,
+      error: "Admin seed failed"
+    });
   }
 });
 
-// ✅ ADMIN LOGIN
+/*
+|--------------------------------------------------------------------------
+| 🔐 ADMIN LOGIN
+|--------------------------------------------------------------------------
+*/
 router.post("/login", async (req, res) => {
-  const { username, password } = req.body;
+  try {
+    const { username, password } = req.body;
 
-  const admin = await Admin.findOne({ username });
-  if (!admin) return res.status(401).json({ error: "Invalid login" });
+    if (!username || !password) {
+      return res.status(400).json({
+        ok: false,
+        error: "Username and password required"
+      });
+    }
 
-  const match = await bcrypt.compare(password, admin.password);
-  if (!match) return res.status(401).json({ error: "Invalid login" });
+    const admin = await Admin.findOne({ username });
+    if (!admin) {
+      return res.status(401).json({
+        ok: false,
+        error: "Invalid login"
+      });
+    }
 
-  res.json({ ok: true, message: "Admin login successful" });
+    const isMatch = await bcrypt.compare(password, admin.password);
+    if (!isMatch) {
+      return res.status(401).json({
+        ok: false,
+        error: "Invalid login"
+      });
+    }
+
+    res.json({
+      ok: true,
+      message: "Admin login successful"
+    });
+
+  } catch (err) {
+    console.error("ADMIN LOGIN ERROR:", err);
+    res.status(500).json({
+      ok: false,
+      error: "Server error"
+    });
+  }
 });
 
 module.exports = router;

@@ -5,24 +5,49 @@ const mongoose = require("mongoose");
 
 const app = express();
 
-app.use(cors());
+/* =====================
+   MIDDLEWARE
+===================== */
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type"]
+}));
+
 app.use(express.json());
 
-// ✅ MongoDB Connect
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected"))
-  .catch(err => console.log("MongoDB Error:", err));
+/* =====================
+   MONGODB CONNECTION
+===================== */
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("✅ MongoDB Connected"))
+  .catch(err => {
+    console.error("❌ MongoDB Error:", err);
+    process.exit(1);
+  });
 
-// ✅ ROUTES
+/* =====================
+   ROUTES
+===================== */
 app.use("/api/booking", require("./routes/booking"));
-app.use("/api/admin", require("./routes/admin")); // 🔥 THIS WAS MISSING
+app.use("/api/admin", require("./routes/admin"));
 
-// ✅ ROOT TEST
+/* =====================
+   HEALTH CHECK / TEST
+===================== */
 app.get("/", (req, res) => {
   res.send("National Auto Garage Backend Running");
 });
 
+app.get("/ping", (req, res) => {
+  res.json({ ok: true, message: "Server alive" });
+});
+
+/* =====================
+   SERVER START
+===================== */
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log("SERVER RUNNING ON PORT", PORT);
+  console.log(`🚀 SERVER RUNNING ON PORT ${PORT}`);
 });
