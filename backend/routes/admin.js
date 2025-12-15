@@ -4,55 +4,40 @@ const Admin = require("../models/Admin");
 
 const router = express.Router();
 
-// ✅ CREATE ADMIN (ONE TIME)
-router.post("/create", async (req, res) => {
+// ✅ AUTO CREATE ADMIN (ONE TIME)
+router.get("/seed", async (req, res) => {
   try {
-    const { username, password } = req.body;
-
-    if (!username || !password) {
-      return res.status(400).json({ error: "Missing fields" });
+    const existing = await Admin.findOne({ username: "admin" });
+    if (existing) {
+      return res.json({ ok: true, message: "Admin already exists" });
     }
 
-    const existingAdmin = await Admin.findOne({ username });
-    if (existingAdmin) {
-      return res.json({ message: "Admin already exists" });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashed = await bcrypt.hash("admin123", 10);
 
     const admin = new Admin({
-      username,
-      password: hashedPassword
+      username: "admin",
+      password: hashed
     });
 
     await admin.save();
-
-    res.json({ message: "Admin created" });
+    res.json({ ok: true, message: "Admin created successfully" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Error creating admin" });
+    res.status(500).json({ ok: false, error: "Admin seed failed" });
   }
 });
 
 // ✅ ADMIN LOGIN
 router.post("/login", async (req, res) => {
-  try {
-    const { username, password } = req.body;
+  const { username, password } = req.body;
 
-    const admin = await Admin.findOne({ username });
-    if (!admin) {
-      return res.status(400).json({ error: "Invalid credentials" });
-    }
+  const admin = await Admin.findOne({ username });
+  if (!admin) return res.status(401).json({ error: "Invalid login" });
 
-    const isMatch = await bcrypt.compare(password, admin.password);
-    if (!isMatch) {
-      return res.status(400).json({ error: "Invalid credentials" });
-    }
+  const match = await bcrypt.compare(password, admin.password);
+  if (!match) return res.status(401).json({ error: "Invalid login" });
 
-    res.json({ message: "Login successful" });
-  } catch (err) {
-    res.status(500).json({ error: "Login error" });
-  }
+  res.json({ ok: true, message: "Admin login successful" });
 });
 
 module.exports = router;
