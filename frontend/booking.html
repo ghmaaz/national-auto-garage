@@ -7,20 +7,33 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+
 <body>
 
 <!-- 🔹 NAVBAR -->
 <nav class="navbar">
   <div class="container nav-flex">
     <div class="logo">National Auto Garage</div>
+
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="my-bookings.html" id="myBookingsLink" style="display:none;">My Bookings</a></li>
-      <li><a href="login.html" id="loginLink">Login</a></li>
-      <li><a href="#" id="logoutLink" style="display:none;">Logout</a></li>
+
+      <li id="myBookingsLink" style="display:none;">
+        <a href="my-bookings.html">My Bookings</a>
+      </li>
+
+      <li id="loginLink">
+        <a href="login.html">Login</a>
+      </li>
+
+      <li id="logoutLink" style="display:none;">
+        <a href="#">Logout</a>
+      </li>
     </ul>
   </div>
 </nav>
@@ -29,7 +42,7 @@
 <section>
   <div class="container">
     <div class="card" style="max-width:420px; margin:auto;">
-      <h2 style="color:#1e3a8a; margin-bottom:16px; text-align:center;">
+      <h2 style="color:#1e3a8a; margin-bottom:20px; text-align:center;">
         Book Bike Service
       </h2>
 
@@ -53,7 +66,16 @@
         <option value="Service + Engine">Service + Engine</option>
       </select>
 
-      <button class="btn" style="width:100%; margin-top:16px;" onclick="submitBooking()">
+      <!-- 🔥 PICKUP / DROP OPTION (IMPORTANT) -->
+      <label style="margin-top:12px; display:flex; align-items:center; gap:8px;">
+        <input type="checkbox" id="pickup">
+        Pickup & Drop Required
+      </label>
+
+      <button
+        class="btn"
+        style="width:100%; margin-top:20px;"
+        onclick="submitBooking()">
         Submit Booking
       </button>
     </div>

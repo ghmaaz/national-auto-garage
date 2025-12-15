@@ -28,9 +28,10 @@ fetch("https://national-auto-garage.onrender.com/api/booking/all")
         <p><strong>Service:</strong> ${b.serviceType}</p>
         <p>
           <strong>Status:</strong>
-          <span class="status ${b.status}">
-            ${b.status}
-          </span>
+                <span class="status ${b.status}">
+                      <i class="fa-solid fa-circle-check"></i> ${b.status}
+                 </span>
+
         </p>
       `;
 

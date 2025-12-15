@@ -3,12 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title>National Auto Garage | Bike Service & Repair</title>
-  <meta name="description" content="National Auto Garage – Trusted two-wheeler service, repair & maintenance. Book bike service online.">
+
+  <meta name="description" content="National Auto Garage – Trusted two-wheeler service, repair & maintenance. Book bike service online and track status.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
+
+  <!-- Icons -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+
 <body>
 
 <!-- 🔹 NAVBAR -->
@@ -16,7 +22,12 @@
   <div class="container nav-flex">
     <div class="logo">National Auto Garage</div>
 
-    <ul class="nav-links">
+    <!-- Mobile toggle -->
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <i class="fa-solid fa-bars"></i>
+    </div>
+
+    <ul class="nav-links" id="navMenu">
       <li><a href="index.html" class="active">Home</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="contact.html">Contact</a></li>
@@ -68,22 +79,22 @@
 
     <div class="service-grid">
       <div class="card">
-        <h3>General Service</h3>
+        <h3><i class="fa-solid fa-motorcycle"></i> General Service</h3>
         <p>Complete bike inspection & servicing.</p>
       </div>
 
       <div class="card">
-        <h3>Engine Repair</h3>
+        <h3><i class="fa-solid fa-gear"></i> Engine Repair</h3>
         <p>Advanced diagnostics & engine work.</p>
       </div>
 
       <div class="card">
-        <h3>Oil Change</h3>
+        <h3><i class="fa-solid fa-oil-can"></i> Oil Change</h3>
         <p>Premium engine oil replacement.</p>
       </div>
 
       <div class="card">
-        <h3>Brake & Chain</h3>
+        <h3><i class="fa-solid fa-screwdriver-wrench"></i> Brake & Chain</h3>
         <p>Safe braking & smooth performance.</p>
       </div>
     </div>
@@ -110,15 +121,34 @@
 <!-- 🔹 FOOTER -->
 <footer class="footer">
   <div class="container">
-    <p>© 2025 National Auto Garage</p>
+    <p><strong>National Auto Garage</strong></p>
+    <p>📍 Mosali, Surat</p>
+    <p>📞 +91 9XXXXXXXXX</p>
+    <p>✉️ nationalautogarage@gmail.com</p>
+
     <p class="footer-sub">
-      Trusted Bike Service • Honest Pricing • Professional Care
+      © 2025 National Auto Garage • Trusted Bike Service
     </p>
   </div>
 </footer>
 
-<!-- 🔹 AUTH SCRIPT -->
+<!-- 🔹 WHATSAPP BUTTON -->
+<a href="https://wa.me/919624844188"
+   class="whatsapp-float"
+   target="_blank"
+   aria-label="Chat on WhatsApp">
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<!-- 🔹 AUTH -->
 <script src="js/auth.js"></script>
+
+<!-- 🔹 MOBILE MENU SCRIPT -->
+<script>
+  function toggleMenu() {
+    document.getElementById("navMenu").classList.toggle("show");
+  }
+</script>
 
 </body>
 </html>
