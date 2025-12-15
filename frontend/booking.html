@@ -2,102 +2,67 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>National Auto Garage | Book Service</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f2f2f2;
-    }
-    .container {
-      width: 350px;
-      margin: 50px auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    h2 {
-      text-align: center;
-      color: #d32f2f;
-    }
-    input, select, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-    }
-    button {
-      background: #d32f2f;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #b71c1c;
-    }
-  </style>
+  <title>Book Service – National Auto Garage</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<div class="container">
-  <h2>Book Bike Service</h2>
+<!-- 🔹 NAVBAR -->
+<nav class="navbar">
+  <div class="container nav-flex">
+    <div class="logo">National Auto Garage</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="my-bookings.html" id="myBookingsLink" style="display:none;">My Bookings</a></li>
+      <li><a href="login.html" id="loginLink">Login</a></li>
+      <li><a href="#" id="logoutLink" style="display:none;">Logout</a></li>
+    </ul>
+  </div>
+</nav>
 
-  <input type="text" id="customerName" placeholder="Customer Name">
- <input 
-  type="tel" 
-  id="phone" 
-  placeholder="Mobile Number (10 digits)" 
-  maxlength="10"
-  oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+<!-- 🔹 BOOKING FORM -->
+<section>
+  <div class="container">
+    <div class="card" style="max-width:420px; margin:auto;">
+      <h2 style="color:#1e3a8a; margin-bottom:16px; text-align:center;">
+        Book Bike Service
+      </h2>
 
-  <input type="text" id="bikeNumber" placeholder="Bike Number">
-  <input type="text" id="bikeName" placeholder="Bike Name">
+      <input type="text" id="customerName" placeholder="Customer Name">
 
-  <select id="serviceType">
-    <option value="">Select Service Type</option>
-    <option value="Service">Service</option>
-    <option value="Engine">Engine</option>
-    <option value="Service + Engine">Service + Engine</option>
-  </select>
+      <input
+        type="tel"
+        id="phone"
+        placeholder="Mobile Number (10 digits)"
+        maxlength="10"
+        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+      >
 
-  <button onclick="submitBooking()">Submit Booking</button>
-</div>
+      <input type="text" id="bikeNumber" placeholder="Bike Number">
+      <input type="text" id="bikeName" placeholder="Bike Name">
 
-<script>
-function submitBooking() {
-  const data = {
-    customerName: document.getElementById("customerName").value,
-    phone: document.getElementById("phone").value,
-    bikeNumber: document.getElementById("bikeNumber").value,
-    bikeName: document.getElementById("bikeName").value,
-    serviceType: document.getElementById("serviceType").value
-  };
+      <select id="serviceType">
+        <option value="">Select Service Type</option>
+        <option value="Service">Service</option>
+        <option value="Engine">Engine</option>
+        <option value="Service + Engine">Service + Engine</option>
+      </select>
 
-  if (!data.customerName || !data.phone || !data.bikeNumber || !data.bikeName || !data.serviceType) {
-    alert("Please fill all fields");
-    return;
-  }
+      <button class="btn" style="width:100%; margin-top:16px;" onclick="submitBooking()">
+        Submit Booking
+      </button>
+    </div>
+  </div>
+</section>
 
-  // 👇 CHANGE 2 – 10 digit validation
-  if (data.phone.length !== 10) {
-    alert("Please enter a valid 10-digit mobile number");
-    return;
-  }
-
- fetch("https://national-auto-garage-backend.onrender.com/api/booking/create", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  })
-  .then(res => res.json())
-  .then(result => {
-    alert("Booking Successful!");
-  })
-  .catch(err => alert("Error submitting booking"));
-}
-</script>
-
+<!-- 🔹 SCRIPTS -->
+<script src="js/auth.js"></script>
+<script src="js/booking.js"></script>
 
 </body>
 </html>

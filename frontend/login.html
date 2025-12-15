@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login – National Auto Garage</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="container nav-flex">
+    <div class="logo">National Auto Garage</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- LOGIN CARD -->
+<section>
+  <div class="container">
+    <div class="card" style="max-width:420px; margin:auto;">
+      <h2 style="color:#1e3a8a; margin-bottom:16px;">User Login</h2>
+
+      <label>Email</label>
+      <input type="email" id="email" placeholder="Enter email"
+        style="width:100%; padding:12px; margin:8px 0 16px;">
+
+      <label>Password</label>
+      <input type="password" id="password" placeholder="Enter password"
+        style="width:100%; padding:12px; margin-bottom:20px;">
+
+      <button class="btn" style="width:100%;" onclick="loginUser()">
+        Login
+      </button>
+
+      <p id="errorMsg" style="color:red; margin-top:12px; display:none;">
+        Invalid login details
+      </p>
+    </div>
+  </div>
+</section>
+
+<script src="js/auth.js"></script>
+</body>
+</html>
