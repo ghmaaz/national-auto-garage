@@ -140,11 +140,8 @@
 
     <div class="divider">or</div>
 
-    <!-- 🔹 GOOGLE SIGN UP -->
-                    <button class="google-btn" id="googleSignupBtn">
-                        <img src="https://developers.google.com/identity/images/g-logo.png">
-                        Sign up with Google
-                    </button>
+    <!-- ✅ GOOGLE SIGN UP -->
+    <button type="button" class="google-btn" onclick="googleSignup()">
       <img src="https://developers.google.com/identity/images/g-logo.png">
       Sign up with Google
     </button>
@@ -156,21 +153,10 @@
   </div>
 </div>
 
-<!-- 🔹 FIREBASE GOOGLE AUTH -->
+<!-- 🔥 FIREBASE GOOGLE AUTH -->
 <script type="module" src="js/firebase.js"></script>
 
-<script type="module">
-  import { googleSignup } from "./js/firebase.js";
-
-  const btn = document.getElementById("googleSignupBtn");
-  if (btn) {
-    btn.addEventListener("click", () => {
-      googleSignup();
-    });
-  }
-</script>
-
-<!-- 🔹 TEMP EMAIL SIGNUP (FRONTEND ONLY) -->
+<!-- 🔹 TEMP EMAIL SIGNUP -->
 <script>
 function signupUser() {
   const name = document.getElementById("name").value.trim();
@@ -182,7 +168,6 @@ function signupUser() {
     return;
   }
 
-  // 🔐 TEMP LOCAL SIGNUP (backend later)
   localStorage.setItem("userLoggedIn", "true");
   localStorage.setItem("userEmail", email);
   localStorage.setItem("userName", name);
