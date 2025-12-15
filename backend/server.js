@@ -5,25 +5,23 @@ const mongoose = require("mongoose");
 
 const app = express();
 
-// ✅ MIDDLEWARE
 app.use(cors());
 app.use(express.json());
 
-// ✅ MONGODB CONNECT
+// ✅ MongoDB Connect
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log("MongoDB Error:", err));
 
 // ✅ ROUTES
 app.use("/api/booking", require("./routes/booking"));
-app.use("/api/admin", require("./routes/admin")); // 🔥 ADMIN ROUTE ADDED
+app.use("/api/admin", require("./routes/admin")); // 🔥 THIS WAS MISSING
 
-// ✅ TEST ROOT
+// ✅ ROOT TEST
 app.get("/", (req, res) => {
   res.send("National Auto Garage Backend Running");
 });
 
-// ✅ SERVER START
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log("SERVER RUNNING ON PORT", PORT);
