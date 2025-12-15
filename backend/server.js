@@ -14,6 +14,11 @@ app.use(cors({
 
 app.use(express.json());
 
+// ✅ SIMPLE PING TEST (VERY IMPORTANT)
+app.get("/ping", (req, res) => {
+  res.send("SERVER ALIVE");
+});
+
 // ✅ MongoDB Connect
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
@@ -21,14 +26,14 @@ mongoose.connect(process.env.MONGO_URI)
 
 // ✅ ROUTES
 app.use("/api/booking", require("./routes/booking"));
-app.use("/api/admin", require("./routes/admin")); // 👈 ADMIN ROUTE ADDED
+app.use("/api/admin", require("./routes/admin"));
 
-// ✅ TEST ROUTE
+// ✅ ROOT TEST
 app.get("/", (req, res) => {
   res.send("National Auto Garage Backend Running");
 });
 
-// ✅ SERVER START
+// ✅ SERVER START (RENDER SAFE)
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log("SERVER RUNNING ON PORT", PORT);
