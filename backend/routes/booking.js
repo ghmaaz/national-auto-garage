@@ -3,7 +3,7 @@ const Booking = require("../models/Booking");
 
 const router = express.Router();
 
-// CREATE
+// ✅ CREATE BOOKING
 router.post("/create", async (req, res) => {
   try {
     const booking = new Booking({
@@ -12,18 +12,19 @@ router.post("/create", async (req, res) => {
       bikeNumber: req.body.bikeNumber,
       bikeName: req.body.bikeName,
       serviceType: req.body.serviceType,
-      userEmail: req.body.userEmail,
+      userEmail: req.body.userEmail, // 🔐 IMPORTANT
       status: "Pending"
     });
 
     await booking.save();
     res.json({ message: "Booking created successfully" });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: "Booking failed" });
   }
 });
 
-// GET ALL
+// ✅ GET ALL BOOKINGS
 router.get("/all", async (req, res) => {
   try {
     const bookings = await Booking.find();
