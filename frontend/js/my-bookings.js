@@ -1,21 +1,28 @@
-// 🔐 LOGIN PROTECTION
+// 🔐 LOGIN CHECK
 if (localStorage.getItem("userLoggedIn") !== "true") {
   alert("Please login to view your bookings");
   window.location.href = "login.html";
 }
 
+// 🔥 TARGET CONTAINER
 const bookingList = document.getElementById("bookingList");
+
+// SAFETY CHECK
+if (!bookingList) {
+  alert("Booking container not found");
+}
 
 // 🔥 FETCH BOOKINGS
 fetch("https://national-auto-garage.onrender.com/api/booking/all")
   .then(res => res.json())
   .then(bookings => {
-    if (!bookings || bookings.length === 0) {
+
+    bookingList.innerHTML = "";
+
+    if (!Array.isArray(bookings) || bookings.length === 0) {
       bookingList.innerHTML = "<p>No bookings found.</p>";
       return;
     }
-
-    bookingList.innerHTML = "";
 
     bookings.forEach(b => {
       const card = document.createElement("div");
@@ -28,10 +35,9 @@ fetch("https://national-auto-garage.onrender.com/api/booking/all")
         <p><strong>Service:</strong> ${b.serviceType}</p>
         <p>
           <strong>Status:</strong>
-                <span class="status ${b.status}">
-                      <i class="fa-solid fa-circle-check"></i> ${b.status}
-                 </span>
-
+          <span style="color:orange;font-weight:600;">
+            ${b.status}
+          </span>
         </p>
       `;
 
@@ -39,6 +45,6 @@ fetch("https://national-auto-garage.onrender.com/api/booking/all")
     });
   })
   .catch(err => {
-    console.error(err);
+    console.error("FETCH ERROR:", err);
     bookingList.innerHTML = "<p>Error loading bookings.</p>";
   });

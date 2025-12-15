@@ -6,7 +6,7 @@ function isUserLoggedIn() {
 }
 
 // ===============================
-// NAVBAR TOGGLE
+// NAVBAR TOGGLE (ALL PAGES)
 // ===============================
 document.addEventListener("DOMContentLoaded", () => {
   const loginLink = document.getElementById("loginLink");
@@ -25,9 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // LOGOUT
   if (logoutLink) {
-    logoutLink.addEventListener("click", () => {
-      localStorage.removeItem("userLoggedIn");
-      localStorage.removeItem("userEmail");
+    logoutLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      localStorage.clear();
       alert("Logged out successfully");
       window.location.href = "index.html";
     });
@@ -35,19 +35,40 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ===============================
-// LOGIN FUNCTION (LOGIN PAGE)
+// REAL LOGIN FUNCTION (BACKEND)
 // ===============================
 function loginUser() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+  const email = document.getElementById("email")?.value.trim();
+  const password = document.getElementById("password")?.value.trim();
   const errorMsg = document.getElementById("errorMsg");
 
-  // Demo credentials (for now)
-  if (email === "user@test.com" && password === "123456") {
-    localStorage.setItem("userLoggedIn", "true");
-    localStorage.setItem("userEmail", email);
-    window.location.href = "booking.html";
-  } else {
-    if (errorMsg) errorMsg.style.display = "block";
+  if (!email || !password) {
+    alert("Please enter email and password");
+    return;
   }
+
+  fetch("https://national-auto-garage.onrender.com/api/auth/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password })
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.ok) {
+        localStorage.setItem("userLoggedIn", "true");
+        localStorage.setItem("userEmail", data.user.email);
+        localStorage.setItem("userName", data.user.name);
+        window.location.href = "booking.html";
+      } else {
+        if (errorMsg) {
+          errorMsg.style.display = "block";
+          errorMsg.innerText = data.error || "Login failed";
+        } else {
+          alert(data.error || "Login failed");
+        }
+      }
+    })
+    .catch(() => {
+      alert("Server error. Please try again.");
+    });
 }

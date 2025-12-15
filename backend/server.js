@@ -30,11 +30,12 @@ mongoose
 /* =====================
    ROUTES
 ===================== */
-app.use("/api/booking", require("./routes/booking"));
-app.use("/api/admin", require("./routes/admin"));
+app.use("/api/auth", require("./routes/auth"));      // ✅ USER LOGIN / SIGNUP
+app.use("/api/booking", require("./routes/booking"));// ✅ BOOKINGS
+app.use("/api/admin", require("./routes/admin"));    // ✅ ADMIN
 
 /* =====================
-   HEALTH CHECK / TEST
+   HEALTH CHECK
 ===================== */
 app.get("/", (req, res) => {
   res.send("National Auto Garage Backend Running");
