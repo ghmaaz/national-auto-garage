@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>National Auto Garage</title>
+  <title>National Auto Garage | Bike Service & Repair</title>
+  <meta name="description" content="National Auto Garage – Trusted two-wheeler service, repair & maintenance. Book bike service online.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- CSS -->
@@ -16,22 +17,20 @@
     <div class="logo">National Auto Garage</div>
 
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html" class="active">Home</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="contact.html">Contact</a></li>
 
-      <li>
-        <a href="my-bookings.html" id="myBookingsLink" style="display:none;">
-          My Bookings
-        </a>
+      <li id="myBookingsLink" style="display:none;">
+        <a href="my-bookings.html">My Bookings</a>
       </li>
 
-      <li>
-        <a href="login.html" id="loginLink">Login</a>
+      <li id="loginLink">
+        <a href="login.html" class="btn-sm">Login</a>
       </li>
 
-      <li>
-        <a href="#" id="logoutLink" style="display:none;">Logout</a>
+      <li id="logoutLink" style="display:none;">
+        <a href="#" class="btn-sm danger">Logout</a>
       </li>
 
       <li>
@@ -43,7 +42,7 @@
   </div>
 </nav>
 
-<!-- 🔹 HERO SECTION -->
+<!-- 🔹 HERO -->
 <section>
   <div class="container">
     <div class="card">
@@ -52,7 +51,7 @@
       </h2>
 
       <p style="margin-bottom:24px; color:#4b5563;">
-        Professional bike servicing, engine repair & maintenance with honest pricing.
+        Professional bike servicing, engine repair & maintenance with transparent pricing and expert technicians.
       </p>
 
       <a href="booking.html">
@@ -67,25 +66,25 @@
   <div class="container">
     <h2 style="margin-bottom:32px; color:#1e3a8a;">Our Services</h2>
 
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:24px;">
+    <div class="service-grid">
       <div class="card">
         <h3>General Service</h3>
-        <p>Complete bike inspection and servicing.</p>
+        <p>Complete bike inspection & servicing.</p>
       </div>
 
       <div class="card">
         <h3>Engine Repair</h3>
-        <p>Advanced diagnostics and engine work.</p>
+        <p>Advanced diagnostics & engine work.</p>
       </div>
 
       <div class="card">
         <h3>Oil Change</h3>
-        <p>High-quality engine oil replacement.</p>
+        <p>Premium engine oil replacement.</p>
       </div>
 
       <div class="card">
         <h3>Brake & Chain</h3>
-        <p>Safe braking and smooth performance.</p>
+        <p>Safe braking & smooth performance.</p>
       </div>
     </div>
   </div>
@@ -99,7 +98,7 @@
     </h2>
 
     <p style="margin-bottom:22px; color:#374151;">
-      Book your service today and ride worry-free.
+      Book your service today and track its status online.
     </p>
 
     <a href="booking.html">
@@ -109,9 +108,12 @@
 </section>
 
 <!-- 🔹 FOOTER -->
-<footer style="background:#111827; color:#9ca3af; padding:24px 0;">
+<footer class="footer">
   <div class="container">
-    <p>© 2025 National Auto Garage. All rights reserved.</p>
+    <p>© 2025 National Auto Garage</p>
+    <p class="footer-sub">
+      Trusted Bike Service • Honest Pricing • Professional Care
+    </p>
   </div>
 </footer>
 

@@ -8,19 +8,32 @@
 </head>
 <body>
 
-<!-- NAVBAR -->
+<!-- 🔹 NAVBAR -->
 <nav class="navbar">
   <div class="container nav-flex">
     <div class="logo">National Auto Garage</div>
+
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="#" id="logoutLink">Logout</a></li>
+
+      <li id="myBookingsLink">
+        <a href="my-bookings.html" class="active">My Bookings</a>
+      </li>
+
+      <li id="loginLink">
+        <a href="login.html" class="btn-sm">Login</a>
+      </li>
+
+      <li id="logoutLink" style="display:none;">
+        <a href="#" class="btn-sm danger">Logout</a>
+      </li>
     </ul>
   </div>
 </nav>
 
+<!-- 🔹 CONTENT -->
 <section>
   <div class="container">
     <h2 style="color:#1e3a8a; margin-bottom:20px;">My Bookings</h2>
@@ -29,7 +42,9 @@
   </div>
 </section>
 
+<!-- 🔹 SCRIPTS -->
 <script src="js/auth.js"></script>
 <script src="js/my-bookings.js"></script>
+
 </body>
 </html>

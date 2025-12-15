@@ -108,3 +108,58 @@ section {
 .nav-links a:hover {
   color: var(--primary-blue);
 }
+/* SERVICES GRID */
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+/* ACTIVE NAV LINK */
+.nav-links a.active {
+  color: #1e3a8a;
+  font-weight: 500;
+}
+
+/* FOOTER */
+.footer {
+  background: #111827;
+  color: #9ca3af;
+  padding: 32px 0;
+  text-align: center;
+}
+
+.footer-sub {
+  font-size: 13px;
+  margin-top: 6px;
+  color: #6b7280;
+}
+
+/* 🔹 Booking Status Colors */
+.status {
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  display: inline-block;
+  font-size: 14px;
+}
+
+.status.Pending {
+  background: #fff3cd;
+  color: #d97706; /* orange */
+}
+
+.status.Confirmed {
+  background: #dbeafe;
+  color: #2563eb; /* blue */
+}
+
+.status.Completed {
+  background: #dcfce7;
+  color: #15803d; /* green */
+}
+
+.status.Cancelled {
+  background: #fee2e2;
+  color: #b91c1c; /* red */
+}

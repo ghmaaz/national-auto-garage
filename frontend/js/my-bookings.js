@@ -6,7 +6,7 @@ if (localStorage.getItem("userLoggedIn") !== "true") {
 
 const bookingList = document.getElementById("bookingList");
 
-// 🔥 FETCH ALL BOOKINGS (NO FILTER)
+// 🔥 FETCH BOOKINGS
 fetch("https://national-auto-garage.onrender.com/api/booking/all")
   .then(res => res.json())
   .then(bookings => {
@@ -14,6 +14,8 @@ fetch("https://national-auto-garage.onrender.com/api/booking/all")
       bookingList.innerHTML = "<p>No bookings found.</p>";
       return;
     }
+
+    bookingList.innerHTML = "";
 
     bookings.forEach(b => {
       const card = document.createElement("div");
@@ -24,7 +26,12 @@ fetch("https://national-auto-garage.onrender.com/api/booking/all")
         <p><strong>Customer:</strong> ${b.customerName}</p>
         <p><strong>Bike:</strong> ${b.bikeName} (${b.bikeNumber})</p>
         <p><strong>Service:</strong> ${b.serviceType}</p>
-        <p><strong>Status:</strong> ${b.status}</p>
+        <p>
+          <strong>Status:</strong>
+          <span class="status ${b.status}">
+            ${b.status}
+          </span>
+        </p>
       `;
 
       bookingList.appendChild(card);
