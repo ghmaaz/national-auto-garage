@@ -22,40 +22,77 @@ body {
   line-height: 1.6;
 }
 
-/* Container */
+/* ===============================
+   CONTAINER
+================================ */
 .container {
   width: 90%;
   max-width: 1100px;
   margin: auto;
 }
 
-/* Header */
-header {
+/* ===============================
+   NAVBAR
+================================ */
+.navbar {
   background: var(--white);
-  padding: 16px 0;
+  padding: 14px 0;
   box-shadow: 0 2px 12px rgba(0,0,0,0.06);
 }
 
-header h1 {
+.nav-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 🔥 LOGO + MENU (LEFT SIDE) */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 600;
   color: var(--primary-blue);
-  font-size: 24px;
+  white-space: nowrap;
+}
+
+/* MENU ICON */
+.menu-toggle {
+  display: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* NAV LINKS */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--dark-text);
+  font-size: 14px;
+}
+
+.nav-links a:hover {
+  color: var(--primary-blue);
+}
+
+.nav-links a.active {
+  color: var(--primary-blue);
   font-weight: 600;
 }
 
-/* Section */
-section {
-  padding: 70px 0;
-}
-
-/* Cards */
-.card {
-  background: var(--white);
-  padding: 30px;
-  border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-}
-
-/* Buttons */
+/* ===============================
+   BUTTONS
+================================ */
 .btn {
   background: var(--accent-orange);
   color: var(--dark-text);
@@ -73,55 +110,38 @@ section {
   opacity: 0.95;
 }
 
-/* Navbar */
-.navbar {
+/* ===============================
+   SECTION / CARDS
+================================ */
+section {
+  padding: 70px 0;
+}
+
+.card {
   background: var(--white);
-  padding: 14px 0;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  transition: 0.3s ease;
 }
 
-.nav-flex {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.08);
 }
 
-.logo {
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--primary-blue);
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 18px;
-  align-items: center;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: var(--dark-text);
-  font-size: 14px;
-}
-
-.nav-links a:hover {
-  color: var(--primary-blue);
-}
-/* SERVICES GRID */
+/* ===============================
+   SERVICES GRID
+================================ */
 .service-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 24px;
 }
 
-/* ACTIVE NAV LINK */
-.nav-links a.active {
-  color: #1e3a8a;
-  font-weight: 500;
-}
-
-/* FOOTER */
+/* ===============================
+   FOOTER
+================================ */
 .footer {
   background: #111827;
   color: #9ca3af;
@@ -135,36 +155,9 @@ section {
   color: #6b7280;
 }
 
-/* 🔹 Booking Status Colors */
-.status {
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 20px;
-  display: inline-block;
-  font-size: 14px;
-}
-
-.status.Pending {
-  background: #fff3cd;
-  color: #d97706; /* orange */
-}
-
-.status.Confirmed {
-  background: #dbeafe;
-  color: #2563eb; /* blue */
-}
-
-.status.Completed {
-  background: #dcfce7;
-  color: #15803d; /* green */
-}
-
-.status.Cancelled {
-  background: #fee2e2;
-  color: #b91c1c; /* red */
-}
-
-/* ===== STATUS BADGES ===== */
+/* ===============================
+   STATUS BADGES
+================================ */
 .status {
   display: inline-block;
   padding: 6px 14px;
@@ -193,27 +186,52 @@ section {
   color: #991b1b;
 }
 
-/* Card hover */
-.card {
-  transition: 0.3s ease;
-}
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+/* ===============================
+   WHATSAPP BUTTON
+================================ */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25d366;
+  color: #fff;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  z-index: 999;
 }
 
-/* ===== MOBILE RESPONSIVE ===== */
+/* ===============================
+   🔥 MOBILE RESPONSIVE NAVBAR
+================================ */
 @media (max-width: 768px) {
 
-  .nav-flex {
-    flex-direction: column;
-    gap: 12px;
+  .menu-toggle {
+    display: block;
   }
 
   .nav-links {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 14px;
+    background: var(--white);
+    padding: 16px 0;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .nav-links li {
+    text-align: center;
+    padding: 8px 0;
   }
 
   .btn {
@@ -232,38 +250,4 @@ section {
   .card {
     padding: 20px;
   }
-}
-
-.nav-links a.active {
-  color: #1e3a8a;
-  font-weight: 600;
-}
-
-.menu-toggle {
-  display: none;
-  font-size: 22px;
-  cursor: pointer;
-}
-
-@media (max-width: 768px) {
-  .menu-toggle { display: block; }
-  .nav-links { display: none; }
-  .nav-links.show { display: flex; flex-direction: column; }
-}
-
-/* WhatsApp */
-.whatsapp-float {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #25d366;
-  color: #fff;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  z-index: 999;
 }

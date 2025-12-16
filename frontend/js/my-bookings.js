@@ -1,50 +1,55 @@
-// 🔐 LOGIN CHECK
+// ===============================
+// LOGIN CHECK
+// ===============================
 if (localStorage.getItem("userLoggedIn") !== "true") {
-  alert("Please login to view your bookings");
+  alert("Please login first");
   window.location.href = "login.html";
 }
 
-// 🔥 TARGET CONTAINER
-const bookingList = document.getElementById("bookingList");
+const bookingTable = document.getElementById("bookingTableBody");
+const userEmail = localStorage.getItem("userEmail");
 
-// SAFETY CHECK
-if (!bookingList) {
-  alert("Booking container not found");
-}
-
-// 🔥 FETCH BOOKINGS
 fetch("https://national-auto-garage.onrender.com/api/booking/all")
   .then(res => res.json())
   .then(bookings => {
 
-    bookingList.innerHTML = "";
+    // 🔥 FILTER USER BOOKINGS
+    const myBookings = bookings.filter(
+      b => b.userEmail === userEmail
+    );
 
-    if (!Array.isArray(bookings) || bookings.length === 0) {
-      bookingList.innerHTML = "<p>No bookings found.</p>";
+    if (myBookings.length === 0) {
+      bookingTable.innerHTML =
+        "<tr><td colspan='5'>No bookings found</td></tr>";
       return;
     }
 
-    bookings.forEach(b => {
-      const card = document.createElement("div");
-      card.className = "card";
-      card.style.marginBottom = "16px";
+    bookingTable.innerHTML = "";
 
-      card.innerHTML = `
-        <p><strong>Customer:</strong> ${b.customerName}</p>
-        <p><strong>Bike:</strong> ${b.bikeName} (${b.bikeNumber})</p>
-        <p><strong>Service:</strong> ${b.serviceType}</p>
-        <p>
-          <strong>Status:</strong>
-          <span style="color:orange;font-weight:600;">
+    myBookings.forEach(b => {
+
+      let statusClass = "badge";
+      if (b.status === "Approved") statusClass += " yes";
+      if (b.status === "Rejected") statusClass += " no";
+
+      const tr = document.createElement("tr");
+
+      tr.innerHTML = `
+        <td>${new Date(b.createdAt).toLocaleString()}</td>
+        <td>${b.customerName}</td>
+        <td>${b.bikeName} (${b.bikeNumber})</td>
+        <td>${b.serviceType}</td>
+        <td>
+          <span class="${statusClass}">
             ${b.status}
           </span>
-        </p>
+        </td>
       `;
 
-      bookingList.appendChild(card);
+      bookingTable.appendChild(tr);
     });
   })
-  .catch(err => {
-    console.error("FETCH ERROR:", err);
-    bookingList.innerHTML = "<p>Error loading bookings.</p>";
+  .catch(() => {
+    bookingTable.innerHTML =
+      "<tr><td colspan='5'>Error loading bookings</td></tr>";
   });

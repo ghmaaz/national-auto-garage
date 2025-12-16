@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Login | National Auto Garage</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    body {
+      background: #f3f4f6;
+      font-family: Poppins, sans-serif;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-box {
+      background: #ffffff;
+      padding: 30px;
+      width: 100%;
+      max-width: 360px;
+      border-radius: 12px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #1e3a8a;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #1e3a8a;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #172554;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="login-box">
+    <h2>Admin Login</h2>
+
+    <input type="text" id="username" placeholder="Admin Username" />
+    <input type="password" id="password" placeholder="Admin Password" />
+
+    <button onclick="loginAdmin()">Login</button>
+  </div>
+
+  <script>
+    function loginAdmin() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!username || !password) {
+        alert("Username aur password dono bharo");
+        return;
+      }
+
+      fetch("https://national-auto-garage.onrender.com/api/admin/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ username, password })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.ok === true) {
+          localStorage.setItem("adminLoggedIn", "true");
+          window.location.href = "dashboard.html";   // ✅ CORRECT
+        } else {
+          alert("Invalid admin credentials");
+        }
+      })
+      .catch(() => {
+        alert("Server error. Try again.");
+      });
+    }
+  </script>
+
+</body>
+</html>
