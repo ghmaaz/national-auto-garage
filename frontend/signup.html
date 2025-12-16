@@ -5,176 +5,90 @@
   <title>Create Account | National Auto Garage</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    body {
-      background: #f3f4f6;
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    .signup-wrapper {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .signup-card {
-      background: #ffffff;
-      width: 100%;
-      max-width: 440px;
-      padding: 28px;
-      border-radius: 14px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-    }
-
-    .signup-card h2 {
-      color: #1e3a8a;
-      margin-bottom: 6px;
-    }
-
-    .signup-card p {
-      font-size: 14px;
-      color: #6b7280;
-      margin-bottom: 20px;
-    }
-
-    label {
-      font-size: 14px;
-      color: #374151;
-      display: block;
-      margin-bottom: 6px;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #d1d5db;
-      margin-bottom: 14px;
-      font-size: 14px;
-      box-sizing: border-box;
-    }
-
-    input:focus {
-      outline: none;
-      border-color: #1e3a8a;
-    }
-
-    .signup-btn {
-      width: 100%;
-      background: #f59e0b;
-      color: #000;
-      padding: 12px;
-      border-radius: 10px;
-      border: none;
-      font-size: 15px;
-      cursor: pointer;
-      margin-top: 6px;
-    }
-
-    .signup-btn:hover {
-      background: #fbbf24;
-    }
-
-    .divider {
-      text-align: center;
-      margin: 20px 0;
-      color: #9ca3af;
-      font-size: 14px;
-    }
-
-    .google-btn {
-      width: 100%;
-      background: #ffffff;
-      border: 1px solid #d1d5db;
-      padding: 12px;
-      border-radius: 10px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      font-size: 14px;
-    }
-
-    .google-btn img {
-      width: 18px;
-    }
-
-    .footer-text {
-      text-align: center;
-      margin-top: 18px;
-      font-size: 14px;
-    }
-
-    .footer-text a {
-      color: #1e3a8a;
-      text-decoration: none;
-      font-weight: 500;
-    }
+    body { background:#f3f4f6; margin:0; font-family:Poppins,sans-serif }
+    .signup-wrapper{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+    .signup-card{background:#fff;width:100%;max-width:440px;padding:28px;border-radius:14px;box-shadow:0 12px 30px rgba(0,0,0,.08)}
+    h2{color:#1e3a8a;margin-bottom:6px}
+    p{font-size:14px;color:#6b7280;margin-bottom:20px}
+    label{font-size:14px;color:#374151;display:block;margin-bottom:6px}
+    input{width:100%;padding:12px;border-radius:8px;border:1px solid #d1d5db;margin-bottom:14px}
+    .signup-btn{width:100%;background:#f59e0b;padding:12px;border-radius:10px;border:none;font-size:15px;cursor:pointer}
+    .divider{text-align:center;margin:20px 0;color:#9ca3af}
+    .google-btn{width:100%;background:#fff;border:1px solid #d1d5db;padding:12px;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px}
+    .footer-text{text-align:center;margin-top:18px}
   </style>
 </head>
-<body>
 
+<body>
 <div class="signup-wrapper">
   <div class="signup-card">
     <h2>Create Account</h2>
-    <p>Create your account to book service and track status</p>
+    <p>Create your account to book service</p>
 
     <label>Full Name</label>
-    <input type="text" id="name" placeholder="Enter your name">
+    <input id="name" type="text" placeholder="Enter your name">
 
     <label>Email</label>
-    <input type="email" id="email" placeholder="Enter email">
+    <input id="email" type="email" placeholder="Enter email">
 
     <label>Password</label>
-    <input type="password" id="password" placeholder="Create password">
+    <input id="password" type="password" placeholder="Min 6 characters">
 
     <button class="signup-btn" onclick="signupUser()">Create Account</button>
 
     <div class="divider">or</div>
 
-    <!-- ✅ GOOGLE SIGN UP -->
-    <button type="button" class="google-btn" onclick="googleSignup()">
-      <img src="https://developers.google.com/identity/images/g-logo.png">
+    <button class="google-btn" onclick="googleSignup()">
+      <img src="https://developers.google.com/identity/images/g-logo.png" width="18">
       Sign up with Google
     </button>
 
     <div class="footer-text">
-      Already have an account?
-      <a href="login.html">Login</a>
+      Already have an account? <a href="login.html">Login</a>
     </div>
   </div>
 </div>
 
-<!-- 🔥 FIREBASE GOOGLE AUTH -->
-<script type="module" src="js/firebase.js"></script>
+<script type="module">
+  import { emailLogin, googleLogin } from "./js/firebase.js";
 
-<!-- 🔹 TEMP EMAIL SIGNUP -->
-<script>
-function signupUser() {
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
-
-  if (!name || !email || !password) {
-    alert("Please fill all fields");
-    return;
+  function redirectAfterLogin() {
+    const redirect = localStorage.getItem("redirectAfterLogin");
+    if (redirect) {
+      localStorage.removeItem("redirectAfterLogin");
+      window.location.href = redirect;
+    } else {
+      window.location.href = "index.html";
+    }
   }
 
-  localStorage.setItem("userLoggedIn", "true");
-  localStorage.setItem("userEmail", email);
-  localStorage.setItem("userName", name);
+  window.loginUser = function () {
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
 
-  alert("Account created successfully!");
-  window.location.href = "booking.html";
-}
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
+
+    emailLogin(email, password)
+      .then(() => {
+        localStorage.setItem("userLoggedIn", "true");
+        redirectAfterLogin();
+      })
+      .catch(() => alert("Invalid email or password"));
+  };
+
+  window.googleLoginUser = function () {
+    googleLogin()
+      .then(() => {
+        localStorage.setItem("userLoggedIn", "true");
+        redirectAfterLogin();
+      })
+      .catch(err => alert(err.message));
+  };
 </script>
 
 </body>

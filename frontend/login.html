@@ -5,177 +5,87 @@
   <title>Login | National Auto Garage</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    body {
-      background: #f3f4f6;
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    .login-wrapper {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .login-card {
-      background: #ffffff;
-      width: 100%;
-      max-width: 440px;
-      padding: 28px;
-      border-radius: 14px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-    }
-
-    .login-card h2 {
-      color: #1e3a8a;
-      margin-bottom: 6px;
-    }
-
-    .login-card p {
-      font-size: 14px;
-      color: #6b7280;
-      margin-bottom: 20px;
-    }
-
-    label {
-      font-size: 14px;
-      color: #374151;
-      display: block;
-      margin-bottom: 6px;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #d1d5db;
-      margin-bottom: 14px;
-      font-size: 14px;
-      box-sizing: border-box;
-    }
-
-    input:focus {
-      outline: none;
-      border-color: #1e3a8a;
-    }
-
-    .login-btn {
-      width: 100%;
-      background: #f59e0b;
-      color: #000;
-      padding: 12px;
-      border-radius: 10px;
-      border: none;
-      font-size: 15px;
-      cursor: pointer;
-      margin-top: 6px;
-    }
-
-    .login-btn:hover {
-      background: #fbbf24;
-    }
-
-    .divider {
-      text-align: center;
-      margin: 20px 0;
-      color: #9ca3af;
-      font-size: 14px;
-    }
-
-    .google-btn {
-      width: 100%;
-      background: #ffffff;
-      border: 1px solid #d1d5db;
-      padding: 12px;
-      border-radius: 10px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      font-size: 14px;
-    }
-
-    .google-btn img {
-      width: 18px;
-    }
-
-    .footer-text {
-      text-align: center;
-      margin-top: 18px;
-      font-size: 14px;
-    }
-
-    .footer-text a {
-      color: #1e3a8a;
-      text-decoration: none;
-      font-weight: 500;
-    }
+    body{background:#f3f4f6;margin:0;font-family:Poppins,sans-serif}
+    .login-wrapper{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+    .login-card{background:#fff;width:100%;max-width:440px;padding:28px;border-radius:14px;box-shadow:0 12px 30px rgba(0,0,0,.08)}
+    h2{color:#1e3a8a;margin-bottom:6px}
+    p{font-size:14px;color:#6b7280;margin-bottom:20px}
+    label{display:block;margin-bottom:6px}
+    input{width:100%;padding:12px;border-radius:8px;border:1px solid #d1d5db;margin-bottom:14px}
+    .login-btn{width:100%;background:#f59e0b;padding:12px;border-radius:10px;border:none;font-size:15px;cursor:pointer}
+    .divider{text-align:center;margin:20px 0;color:#9ca3af}
+    .google-btn{width:100%;background:#fff;border:1px solid #d1d5db;padding:12px;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px}
+    .footer-text{text-align:center;margin-top:18px}
   </style>
 </head>
-<body>
 
+<body>
 <div class="login-wrapper">
   <div class="login-card">
     <h2>Welcome Back</h2>
-    <p>Login to manage your bookings</p>
+    <p>Login to continue</p>
 
     <label>Email</label>
-    <input type="email" id="email" placeholder="Enter email">
+    <input id="email" type="email" placeholder="Enter email">
 
     <label>Password</label>
-    <input type="password" id="password" placeholder="Enter password">
+    <input id="password" type="password" placeholder="Enter password">
 
     <button class="login-btn" onclick="loginUser()">Login</button>
 
     <div class="divider">or</div>
 
-    <!-- 🔹 GOOGLE LOGIN -->
-    <button class="google-btn" onclick="googleSignup()">
-      <img src="https://developers.google.com/identity/images/g-logo.png">
+    <button class="google-btn" onclick="googleLoginUser()">
+      <img src="https://developers.google.com/identity/images/g-logo.png" width="18">
       Login with Google
     </button>
 
     <div class="footer-text">
-      Don’t have an account?
-      <a href="signup.html">Create Account</a>
+      Don’t have an account? <a href="signup.html">Create Account</a>
     </div>
   </div>
 </div>
 
-<!-- 🔹 FIREBASE AUTH -->
-<script type="module" src="js/firebase.js"></script>
+<script type="module">
+  import { emailLogin, googleLogin } from "./js/firebase.js";
 
-<!-- 🔹 EMAIL LOGIN (TEMP DEMO) -->
-<script>
-function loginUser() {
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
-
-  if (!email || !password) {
-    alert("Please enter email and password");
-    return;
+  function redirectAfterLogin() {
+    const redirect = localStorage.getItem("redirectAfterLogin");
+    if (redirect) {
+      localStorage.removeItem("redirectAfterLogin");
+      window.location.href = redirect;
+    } else {
+      window.location.href = "index.html";
+    }
   }
 
-  // 🔐 TEMP LOGIN (same as signup)
-  if (password.length < 6) {
-    alert("Invalid login credentials");
-    return;
-  }
+  window.loginUser = function () {
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
 
-  localStorage.setItem("userLoggedIn", "true");
-  localStorage.setItem("userEmail", email);
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
 
-  alert("Login successful!");
-  window.location.href = "booking.html";
-}
+    emailLogin(email, password)
+      .then(() => {
+        localStorage.setItem("userLoggedIn", "true");
+        redirectAfterLogin();
+      })
+      .catch(() => alert("Invalid email or password"));
+  };
+
+  window.googleLoginUser = function () {
+    googleLogin()
+      .then(() => {
+        localStorage.setItem("userLoggedIn", "true");
+        redirectAfterLogin();
+      })
+      .catch(err => alert(err.message));
+  };
 </script>
 
 </body>

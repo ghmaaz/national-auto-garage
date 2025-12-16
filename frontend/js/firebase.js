@@ -1,12 +1,16 @@
-// 🔥 Firebase SDKs (Web v10 – browser compatible)
+// Firebase SDKs (v10)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import {
   getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   GoogleAuthProvider,
-  signInWithPopup
+  signInWithPopup,
+  onAuthStateChanged,
+  signOut
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// 🔐 Firebase configuration
+// 🔐 Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyC2xWj8Tycwm60CdUfXLhJjsBTXpP6wmVc",
   authDomain: "national-auto-garage.firebaseapp.com",
@@ -16,26 +20,42 @@ const firebaseConfig = {
   appId: "1:866545378100:web:e847dce29547ad33c8fb61"
 };
 
-// 🚀 Initialize Firebase
+// Init
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
+export const auth = getAuth(app);
+export const provider = new GoogleAuthProvider();
 
-// ✅ EXPORT FUNCTION (IMPORTANT)
-export function googleSignup() {
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      const user = result.user;
+// ===============================
+// EMAIL SIGNUP
+// ===============================
+export function emailSignup(email, password) {
+  return createUserWithEmailAndPassword(auth, email, password);
+}
 
-      localStorage.setItem("userLoggedIn", "true");
-      localStorage.setItem("userEmail", user.email);
-      localStorage.setItem("userName", user.displayName || "User");
+// ===============================
+// EMAIL LOGIN
+// ===============================
+export function emailLogin(email, password) {
+  return signInWithEmailAndPassword(auth, email, password);
+}
 
-      alert("Google signup successful!");
-      window.location.href = "booking.html";
-    })
-    .catch((error) => {
-      console.error("Google Signup Error:", error);
-      alert("Google signup failed. Try again.");
-    });
+// ===============================
+// GOOGLE LOGIN / SIGNUP
+// ===============================
+export function googleLogin() {
+  return signInWithPopup(auth, provider);
+}
+
+// ===============================
+// LOGOUT
+// ===============================
+export function logoutUser() {
+  return signOut(auth);
+}
+
+// ===============================
+// AUTH STATE
+// ===============================
+export function watchAuth(callback) {
+  onAuthStateChanged(auth, callback);
 }

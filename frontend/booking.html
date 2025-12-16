@@ -5,7 +5,6 @@
   <title>Book Service – National Auto Garage</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -13,78 +12,60 @@
 
 <body>
 
-<!-- 🔹 NAVBAR -->
 <nav class="navbar">
   <div class="container nav-flex">
     <div class="logo">National Auto Garage</div>
-
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
-
-      <li id="myBookingsLink" style="display:none;">
-        <a href="my-bookings.html">My Bookings</a>
-      </li>
-
-      <li id="loginLink">
-        <a href="login.html">Login</a>
-      </li>
-
-      <li id="logoutLink" style="display:none;">
-        <a href="#">Logout</a>
-      </li>
+      <li id="myBookingsLink" style="display:none;"><a href="my-bookings.html">My Bookings</a></li>
+      <li id="loginLink"><a href="login.html">Login</a></li>
+      <li id="logoutLink" style="display:none;"><a href="#">Logout</a></li>
     </ul>
   </div>
 </nav>
 
-<!-- 🔹 BOOKING FORM -->
 <section>
   <div class="container">
-    <div class="card" style="max-width:420px; margin:auto;">
-      <h2 style="color:#1e3a8a; margin-bottom:20px; text-align:center;">
-        Book Bike Service
-      </h2>
+    <div class="card" style="max-width:520px;margin:auto;">
+      <h2 style="color:#1e3a8a;text-align:center;">Book Bike Service</h2>
+      <p style="text-align:center;color:#6b7280;margin-bottom:20px;">
+        Fill details to schedule your bike service
+      </p>
 
       <input type="text" id="customerName" placeholder="Customer Name">
-
-      <input
-        type="tel"
-        id="phone"
-        placeholder="Mobile Number (10 digits)"
-        maxlength="10"
-        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-      >
-
+      <input type="tel" id="phone" placeholder="Mobile Number" maxlength="10"
+             oninput="this.value=this.value.replace(/[^0-9]/g,'')">
       <input type="text" id="bikeNumber" placeholder="Bike Number">
       <input type="text" id="bikeName" placeholder="Bike Name">
 
       <select id="serviceType">
-        <option value="">Select Service Type</option>
+        <option value="">Select Service</option>
         <option value="Service">Service</option>
         <option value="Engine">Engine</option>
         <option value="Service + Engine">Service + Engine</option>
       </select>
 
-      <!-- 🔥 PICKUP / DROP OPTION (IMPORTANT) -->
-      <label style="margin-top:12px; display:flex; align-items:center; gap:8px;">
-        <input type="checkbox" id="pickup">
-        Pickup & Drop Required
+      <label style="margin-top:12px;display:flex;gap:8px;">
+        <input type="checkbox" id="pickup"> Pickup & Drop Required
       </label>
 
-      <button
-        class="btn"
-        style="width:100%; margin-top:20px;"
-        onclick="submitBooking()">
-        Submit Booking
+      <button class="btn" style="width:100%;margin-top:18px;" onclick="submitBooking()">
+        Confirm Booking
       </button>
     </div>
   </div>
 </section>
 
-<!-- 🔹 SCRIPTS -->
 <script src="js/auth.js"></script>
 <script src="js/booking.js"></script>
+
+<script>
+  if (localStorage.getItem("userLoggedIn") !== "true") {
+    localStorage.setItem("redirectAfterLogin","booking.html");
+    alert("Please login to book service");
+    window.location.href = "login.html";
+  }
+</script>
 
 </body>
 </html>
