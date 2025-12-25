@@ -20,43 +20,45 @@
 <!-- 🔹 NAVBAR -->
 <nav class="navbar">
   <div class="container nav-flex">
+    <div class="logo">National Auto Garage</div>
 
-    <!-- 🔹 LEFT (LOGO + MENU ICON) -->
-    <div class="nav-left">
-      <div class="logo">National Auto Garage</div>
-
-      <!-- Mobile toggle (RIGHT OF LOGO) -->
-      <div class="menu-toggle" onclick="toggleMenu()">
-        <i class="fa-solid fa-bars"></i>
-      </div>
+    <!-- MOBILE MENU BUTTON -->
+    <div class="menu-toggle" onclick="openMenu()">
+      <i class="fa-solid fa-bars"></i>
     </div>
 
-    <!-- 🔹 NAV LINKS -->
-    <ul class="nav-links" id="navMenu">
+    <!-- DESKTOP LINKS -->
+    <ul class="nav-links desktop-menu">
       <li><a href="index.html" class="active">Home</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="contact.html">Contact</a></li>
-
-      <li id="myBookingsLink" style="display:none;">
-        <a href="my-bookings.html">My Bookings</a>
-      </li>
-
-      <li id="loginLink">
-        <a href="login.html" class="btn-sm">Login</a>
-      </li>
-
-      <li id="logoutLink" style="display:none;">
-        <a href="#" class="btn-sm danger">Logout</a>
-      </li>
-
-      <li>
-        <a href="booking.html">
-          <button class="btn">Book Service</button>
-        </a>
-      </li>
+      <li><a href="booking.html" class="btn-sm">Book Service</a></li>
     </ul>
   </div>
 </nav>
+
+<!-- 🔹 MOBILE SIDEBAR -->
+<div id="mobileMenu" class="mobile-menu">
+  <div class="mobile-header">
+    <span>Menu</span>
+    <i class="fa-solid fa-xmark" onclick="closeMenu()"></i>
+  </div>
+
+  <a href="index.html" class="nav-item">🏠 Home</a>
+  <a href="about.html" class="nav-item">ℹ️ About</a>
+  <a href="contact.html" class="nav-item">📞 Contact</a>
+  <a href="booking.html" class="nav-item">🛠 Book Service</a>
+
+  <!-- USER LINKS -->
+  <a href="my-bookings.html" id="sbMyBookings" class="nav-item">📋 My Bookings</a>
+  <a href="login.html" id="sbLogin" class="nav-item">🔐 Login</a>
+  <a href="signup.html" id="sbSignup" class="nav-item">📝 Signup</a>
+  <a href="#" id="sbLogout" class="nav-item danger">🚪 Logout</a>
+</div>
+
+
+<!-- 🔹 OVERLAY -->
+<div id="menuOverlay" class="menu-overlay" onclick="closeMenu()"></div>
 
 <!-- 🔹 HERO -->
 <section>
@@ -125,6 +127,11 @@
 
 <!-- 🔹 FOOTER -->
 <footer class="footer">
+  <a href="https://wisteriatrust.com/?id=WT-2025-002" target="_blank">
+  <img src="https://wisteriatrust.com/seller/badge.png"
+       alt="Verified by Wisteria Trust"
+       width="140">
+</a>
   <div class="container">
     <p><strong>National Auto Garage</strong></p>
     <p>📍 Mosali, Surat</p>
@@ -152,6 +159,51 @@
 <script>
   function toggleMenu() {
     document.getElementById("navMenu").classList.toggle("show");
+  }
+</script>
+
+<script>
+  function openMenu() {
+    document.getElementById("mobileMenu").classList.add("show");
+    document.getElementById("menuOverlay").classList.add("show");
+  }
+
+  function closeMenu() {
+    document.getElementById("mobileMenu").classList.remove("show");
+    document.getElementById("menuOverlay").classList.remove("show");
+  }
+</script>
+<script>
+  // LOGIN BASED SIDEBAR
+  const loggedIn = localStorage.getItem("userLoggedIn") === "true";
+
+  document.getElementById("sbLogin").style.display = loggedIn ? "none" : "block";
+  document.getElementById("sbSignup").style.display = loggedIn ? "none" : "block";
+  document.getElementById("sbLogout").style.display = loggedIn ? "block" : "none";
+  document.getElementById("sbMyBookings").style.display = loggedIn ? "block" : "none";
+
+  // LOGOUT
+  document.getElementById("sbLogout").onclick = () => {
+    localStorage.clear();
+    window.location.href = "index.html";
+  };
+
+  // ACTIVE PAGE HIGHLIGHT
+  const currentPage = location.pathname.split("/").pop();
+  document.querySelectorAll(".nav-item").forEach(link => {
+    if (link.getAttribute("href") === currentPage) {
+      link.classList.add("active");
+    }
+  });
+
+  function openMenu() {
+    document.getElementById("mobileMenu").classList.add("show");
+    document.getElementById("menuOverlay").classList.add("show");
+  }
+
+  function closeMenu() {
+    document.getElementById("mobileMenu").classList.remove("show");
+    document.getElementById("menuOverlay").classList.remove("show");
   }
 </script>
 
